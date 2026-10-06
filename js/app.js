@@ -12,6 +12,7 @@
 
 import * as store from './store.js';
 import { loadRecipes, matchRecipes, claudePrompt, norm, MESE } from './recipes.js';
+import { AISLES, aisleFor, placeFor, PLACES, placeLabel, placeIn } from './aisles.js';
 
 const $ = (sel) => document.querySelector(sel);
 const view = $('#view');
@@ -19,9 +20,12 @@ const tabsEl = $('#tabs');
 
 const state = {
   tab: 'frigider',
-  items: [],          // ce e în frigider
+  place: 'frigider',  // frigider, congelator sau cămară (în primul ecran)
+  items: [],          // ce aveți acasă, în toate cele trei locuri
   shopping: [],       // lista de cumpărături
   quick: [],          // butoanele rapide
+  aisles: {},         // raioanele alese de voi: { 'nume normalizat': 'Raion' }
+  openShop: null,     // produsul de pe listă pentru care alegi raionul
   publicRecipes: [],  // rețetele din data/recipes.json (publice)
   recipes: [],        // publice + cele private din planul nutrițional
   user: null,
@@ -99,10 +103,12 @@ function toast(msg) {
 // -------------------------------------------------------------
 
 async function loadAll(force = true) {
-  const [items, shopping, quick] = await Promise.all([
-    store.list('items'), store.list('shopping'), store.list('quick_items'),
+  const [items, shopping, quick, aisles] = await Promise.all([
+    store.list('items'), store.list('shopping'), store.list('quick_items'), store.list('aisles'),
   ]);
-  Object.assign(state, { items, shopping, quick });
+  for (const it of items) it.location ??= 'frigider';
+  for (const q of quick) q.location ??= 'frigider';
+  Object.assign(state, { items, shopping, quick, aisles: Object.fromEntries(aisles.map((a) => [a.id, a.aisle])) });
   render(force);
 }
 
@@ -121,7 +127,8 @@ function render(force = true) {
 
   const loggedOut = !store.isDemo && !state.user;
   tabsEl.hidden = loggedOut;
-  $('#title').textContent = loggedOut ? 'Frigiderul nostru' : TITLES[state.tab];
+  $('#title').textContent = loggedOut ? 'Frigiderul nostru'
+    : state.tab === 'frigider' ? placeLabel(state.place) : TITLES[state.tab];
   view.innerHTML = loggedOut ? viewLogin() : VIEWS[state.tab]();
 
   for (const b of tabsEl.querySelectorAll('button')) {
@@ -136,31 +143,51 @@ function render(force = true) {
 // -------------------------------------------------------------
 
 function viewFrigider() {
-  const items = [...state.items].sort(byExpiry);
+  const place = state.place;
+  const items = state.items.filter((it) => it.location === place).sort(byExpiry);
   const chips = state.quick
+    .filter((q) => q.location === place)
     .map((q) => `<button class="chip" data-action="quick" data-name="${esc(q.name)}">+ ${esc(q.name)}</button>`)
     .join('');
 
+  // Câte produse are fiecare loc și câte expiră în cel mult 2 zile.
+  const seg = PLACES.map((p) => {
+    const here = state.items.filter((it) => it.location === p.id);
+    const soon = here.filter((it) => { const d = daysLeft(it.expires_on); return d !== null && d <= 2; }).length;
+    return `<button data-action="place" data-place="${p.id}" class="${p.id === place ? 'on' : ''}">
+      ${p.label} <span class="n">${here.length}</span>${soon ? `<span class="dot" title="expiră curând"></span>` : ''}
+    </button>`;
+  }).join('');
+
   return `
+    <div class="seg three" role="tablist">${seg}</div>
     <section class="card">
       <div class="chips">${chips || '<span class="muted small">Adaugă butoane rapide din Setări.</span>'}</div>
       <form id="addItem" class="add">
-        <input name="name" placeholder="Ce ai pus în frigider?" autocomplete="off" maxlength="80" required>
+        <input name="name" placeholder="Ce ai pus ${placeIn(place)}?" autocomplete="off" maxlength="80" required>
         <input name="qty" placeholder="Cantitate (opțional)" autocomplete="off" maxlength="40">
         <div class="row exp">
           <label for="exp">Expiră</label>
           <input id="exp" type="date" name="exp">
-          <button type="button" data-action="exp" data-days="3">+3z</button>
-          <button type="button" data-action="exp" data-days="7">+7z</button>
+          ${place === 'congelator'
+            ? '<button type="button" data-action="exp" data-days="90">+3 luni</button>'
+            : '<button type="button" data-action="exp" data-days="3">+3z</button><button type="button" data-action="exp" data-days="7">+7z</button>'}
         </div>
-        <button class="primary">Adaugă în frigider</button>
+        <button class="primary">Adaugă ${placeIn(place)}</button>
       </form>
     </section>
-    <h2>În frigider <span class="muted">(${items.length})</span></h2>
+    <h2>${placeLabel(place)} <span class="muted">(${items.length})</span></h2>
     <ul class="list">
-      ${items.map(itemRow).join('') || '<li class="empty">Frigiderul e gol. Apasă un buton rapid sau scrie un produs.</li>'}
+      ${items.map(itemRow).join('') || `<li class="empty">Nimic ${placeIn(place)}. Apasă un buton rapid sau scrie un produs.</li>`}
     </ul>`;
 }
+
+// Unde se poate muta un produs și ce se întâmplă cu data de expirare.
+const MOVES = {
+  frigider: { to: 'congelator', label: 'Mută în congelator' },
+  congelator: { to: 'frigider', label: 'Scoate în frigider' },
+  camara: { to: 'frigider', label: 'Mută în frigider (deschis)' },
+};
 
 function itemRow(it) {
   const open = state.openItem === it.id;
@@ -176,32 +203,58 @@ function itemRow(it) {
         <div class="item-actions">
           <button class="primary" data-action="done-shop" data-id="${it.id}">Terminat + pe listă</button>
           <button class="secondary" data-action="done" data-id="${it.id}">Doar terminat</button>
+        </div>
+        <div class="item-actions">
+          <button class="secondary" data-action="move" data-id="${it.id}">${MOVES[it.location].label}</button>
+        </div>` : ''}
+    </li>`;
+}
+
+function shopRow(s) {
+  const open = state.openShop === s.id;
+  const current = aisleFor(s.name, state.aisles);
+  return `
+    <li class="shop-wrap">
+      <div class="shop ${s.done ? 'done' : ''}">
+        <button class="check" data-action="check" data-id="${s.id}" aria-label="Bifează">${s.done ? '✓' : ''}</button>
+        <button class="name linkish" data-action="pick-aisle" data-id="${s.id}" title="Schimbă raionul">${esc(s.name)}</button>
+        ${who(s.added_by)}
+        <button class="x" data-action="delshop" data-id="${s.id}" aria-label="Șterge">×</button>
+      </div>
+      ${open ? `
+        <div class="aisle-pick">
+          <span class="muted small">Raion:</span>
+          ${AISLES.map((a) => `<button class="chip ${a === current ? 'on' : ''}" data-action="set-aisle" data-id="${s.id}" data-aisle="${esc(a)}">${esc(a)}</button>`).join('')}
         </div>` : ''}
     </li>`;
 }
 
 function viewCumparaturi() {
-  const list = [...state.shopping].sort((a, b) => (a.done - b.done) || a.created_at.localeCompare(b.created_at));
-  const checked = list.filter((s) => s.done).length;
+  const toBuy = state.shopping.filter((s) => !s.done);
+  const done = state.shopping.filter((s) => s.done);
+
+  // Grupăm pe raioane, în ordinea din magazin.
+  const groups = AISLES.map((aisle) => ({
+    aisle,
+    rows: toBuy.filter((s) => aisleFor(s.name, state.aisles) === aisle)
+      .sort((a, b) => a.name.localeCompare(b.name, 'ro')),
+  })).filter((g) => g.rows.length);
 
   return `
     <form id="addShop" class="add inline">
       <input name="name" placeholder="Ce trebuie cumpărat?" autocomplete="off" maxlength="80" required>
       <button class="primary">Adaugă</button>
     </form>
-    <h2>De cumpărat</h2>
-    <ul class="list">
-      ${list.map((s) => `
-        <li class="shop ${s.done ? 'done' : ''}">
-          <button class="check" data-action="check" data-id="${s.id}" aria-label="Bifează">${s.done ? '✓' : ''}</button>
-          <span class="name">${esc(s.name)}</span>
-          ${who(s.added_by)}
-          <button class="x" data-action="delshop" data-id="${s.id}" aria-label="Șterge">×</button>
-        </li>`).join('') || '<li class="empty">Lista e goală.</li>'}
-    </ul>
-    ${checked ? `
+    ${groups.length ? '<p class="muted small hint">Apasă pe un produs ca să-l muți în alt raion. Aplicația ține minte.</p>' : ''}
+    ${groups.map((g) => `
+      <h2 class="aisle">${esc(g.aisle)} <span class="muted">(${g.rows.length})</span></h2>
+      <ul class="list">${g.rows.map(shopRow).join('')}</ul>`).join('')
+      || '<ul class="list"><li class="empty">Lista e goală.</li></ul>'}
+    ${done.length ? `
+      <h2>În coș <span class="muted">(${done.length})</span></h2>
+      <ul class="list">${done.map(shopRow).join('')}</ul>
       <div class="bar">
-        <button class="primary" data-action="to-fridge">Pune ${checked === 1 ? 'produsul bifat' : `cele ${checked} bifate`} în frigider</button>
+        <button class="primary" data-action="to-fridge">Pune ${done.length === 1 ? 'produsul bifat' : `cele ${done.length} bifate`} acasă</button>
         <button class="secondary" data-action="clear-checked">Doar șterge bifatele</button>
       </div>` : ''}`;
 }
@@ -229,7 +282,8 @@ function recipeCard(r) {
       <div class="body">
         ${fromPlan ? `<p class="muted small">Cantități pentru: ${esc(r.portii)}</p>` : ''}
         ${r.ing.length ? `<ul>${r.ing.map(ingredient).join('')}</ul>` : ''}
-        ${r.camara.length ? `<p class="muted small">Din cămară: ${esc(r.camara.join(', '))}</p>` : ''}
+        ${r.camara.length ? `<p class="muted small">Din cămară: ${r.camara.map((c, i) =>
+          r.camaraAi[i] ? `<span class="have">✓ ${esc(c)}</span>` : esc(c)).join(', ')}</p>` : ''}
         <ol>${r.pasi.map((p) => `<li>${esc(p)}</li>`).join('')}</ol>
         ${r.note?.length ? `<div class="notes small">${r.note.map((n) => `<p>${esc(n)}</p>`).join('')}</div>` : ''}
         ${r.missing.length ? `<button class="secondary block" data-action="add-missing" data-names="${esc(JSON.stringify(missingNames))}">Pune ce lipsește pe listă</button>` : ''}
@@ -278,18 +332,26 @@ function viewRetete() {
 }
 
 function viewSetari() {
-  const chips = state.quick
-    .map((q) => `<button class="chip" data-action="delquick" data-id="${q.id}">${esc(q.name)} <b>×</b></button>`)
-    .join('');
+  const group = (p) => {
+    const chips = state.quick.filter((q) => q.location === p.id)
+      .map((q) => `<button class="chip" data-action="delquick" data-id="${q.id}">${esc(q.name)} <b>×</b></button>`)
+      .join('');
+    return `<h3 class="sub">${p.label}</h3><div class="quick-edit">${chips || '<span class="muted small">Niciunul.</span>'}</div>`;
+  };
 
   return `
     <h2>Butoane rapide</h2>
     <section class="card">
       <p class="muted small" style="margin-top:0">Produsele cumpărate des. Apasă pe unul ca să-l scoți.</p>
-      <div class="quick-edit">${chips || '<span class="muted">Niciunul.</span>'}</div>
-      <form id="addQuick" class="add inline">
+      ${PLACES.map(group).join('')}
+      <form id="addQuick" class="add">
         <input name="name" placeholder="Produs nou" autocomplete="off" maxlength="40" required>
-        <button class="primary">Adaugă</button>
+        <div class="row">
+          <select name="location" aria-label="Unde">
+            ${PLACES.map((p) => `<option value="${p.id}">${p.label}</option>`).join('')}
+          </select>
+          <button class="primary">Adaugă</button>
+        </div>
       </form>
     </section>
 
@@ -335,8 +397,14 @@ async function addToShopping(names) {
 }
 
 const actions = {
+  place(btn) {
+    state.place = btn.dataset.place;
+    state.openItem = null;
+    render();
+  },
+
   async quick(btn) {
-    await store.insert('items', { name: btn.dataset.name });
+    await store.insert('items', { name: btn.dataset.name, location: state.place });
     await loadAll();
     toast(`${btn.dataset.name} — adăugat`);
   },
@@ -365,6 +433,20 @@ const actions = {
     toast(`${it.name} — pe lista de cumpărături`);
   },
 
+  // Frigider → congelator: mai ține ~3 luni. Congelator → frigider: 2 zile
+  // după dezghețare. Cămară → frigider (borcan deschis): data rămâne.
+  async move(btn) {
+    const it = state.items.find((i) => i.id === btn.dataset.id);
+    const to = MOVES[it.location].to;
+    const patch = { location: to };
+    if (it.location === 'frigider') patch.expires_on = isoDate(90);
+    if (it.location === 'congelator') patch.expires_on = isoDate(2);
+    await store.update('items', it.id, patch);
+    state.openItem = null;
+    await loadAll();
+    toast(`${it.name} — ${placeIn(to)}`);
+  },
+
   async check(btn) {
     const s = state.shopping.find((x) => x.id === btn.dataset.id);
     await store.update('shopping', s.id, { done: !s.done });
@@ -376,13 +458,34 @@ const actions = {
     await loadAll();
   },
 
-  // Bucla completă: cumperi → bifezi → ajunge în frigider.
+  // Bucla completă: cumperi → bifezi → ajunge acasă, la locul potrivit
+  // (frigider, congelator sau cămară, după raion). Ce e de la „Casă"
+  // (detergent, hârtie) doar dispare de pe listă.
   async 'to-fridge'() {
     const bought = state.shopping.filter((s) => s.done);
-    await store.insert('items', bought.map((s) => ({ name: s.name })));
+    const rows = bought
+      .map((s) => ({ name: s.name, location: placeFor(s.name, state.aisles) }))
+      .filter((r) => r.location);
+    if (rows.length) await store.insert('items', rows);
     await store.remove('shopping', bought.map((s) => s.id));
     await loadAll();
-    toast(`${bought.length} ${bought.length === 1 ? 'produs mutat' : 'produse mutate'} în frigider`);
+    const counts = PLACES.map((p) => [p, rows.filter((r) => r.location === p.id).length])
+      .filter(([, n]) => n).map(([p, n]) => `${n} ${p.in}`);
+    toast(counts.length ? `Am pus ${counts.join(', ')}` : 'Lista a fost golită');
+  },
+
+  'pick-aisle'(btn) {
+    state.openShop = state.openShop === btn.dataset.id ? null : btn.dataset.id;
+    render();
+  },
+
+  // Raionul ales se salvează pe numele produsului, pentru amândoi.
+  async 'set-aisle'(btn) {
+    const s = state.shopping.find((x) => x.id === btn.dataset.id);
+    await store.upsert('aisles', { id: norm(s.name), aisle: btn.dataset.aisle });
+    state.openShop = null;
+    await loadAll();
+    toast(`${s.name} → ${btn.dataset.aisle}`);
   },
 
   async 'clear-checked'() {
@@ -440,6 +543,7 @@ const forms = {
       name,
       quantity: data.qty.trim() || null,
       expires_on: data.exp || null,
+      location: state.place,
     });
     await loadAll();
     toast(`${name} — adăugat`);
@@ -457,8 +561,9 @@ const forms = {
   async addQuick(data) {
     const name = data.name.trim();
     if (!name) return;
-    if (state.quick.some((q) => norm(q.name) === norm(name))) { toast('Există deja'); return; }
-    await store.insert('quick_items', { name });
+    const location = data.location || 'frigider';
+    if (state.quick.some((q) => q.location === location && norm(q.name) === norm(name))) { toast('Există deja'); return; }
+    await store.insert('quick_items', { name, location });
     await loadAll();
   },
 
@@ -517,6 +622,7 @@ tabsEl.addEventListener('click', (e) => {
   if (!btn) return;
   state.tab = btn.dataset.tab;
   state.openItem = null;
+  state.openShop = null;
   state.showPrompt = false;
   render();
   window.scrollTo(0, 0);

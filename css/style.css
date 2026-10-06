@@ -247,3 +247,31 @@ textarea.prompt {
   border: 0; background: none; padding: 9px 6px; border-radius: 9px; font-size: 14px; color: var(--muted);
 }
 .seg button.on { background: var(--card); color: var(--text); font-weight: 600; }
+
+/* ---------- v2: frigider / congelator / cămară ---------- */
+.seg.three { grid-template-columns: repeat(3, 1fr); }
+.seg .n { color: var(--muted); font-weight: 400; font-variant-numeric: tabular-nums; margin-left: 2px; }
+.seg .dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--warn); margin-left: 4px; vertical-align: middle;
+}
+
+/* ---------- v2: raioane ---------- */
+h2.aisle { font-size: 15px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 18px; }
+.hint { margin: 10px 4px 0; }
+.linkish {
+  border: 0; background: none; padding: 6px 0; text-align: left; font: inherit; color: inherit; cursor: pointer;
+}
+.aisle-pick {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  padding: 0 12px 12px;
+}
+.aisle-pick .chip { font-size: 13px; padding: 6px 10px; }
+.chip.on { background: var(--accent); color: var(--accent-text); }
+
+/* ---------- v2: setări ---------- */
+h3.sub { font-size: 14px; margin: 14px 0 8px; color: var(--muted); font-weight: 600; }
+select {
+  font: inherit; font-size: 16px; color: var(--text); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 10px; padding: 11px 10px; flex: 1;
+}

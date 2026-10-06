@@ -2,7 +2,7 @@
 // STRATUL DE DATE
 // -------------------------------------------------------------
 // Restul aplicației nu știe unde stau datele. Vorbește doar cu
-// funcțiile exportate de aici: list, insert, update, remove,
+// funcțiile exportate de aici: list, insert, update, upsert, remove,
 // onChange și cele de login.
 //
 // Există două implementări cu exact aceleași funcții:
@@ -16,14 +16,18 @@ import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 
 export const isDemo = !SUPABASE_URL || !SUPABASE_ANON_KEY;
 
-// Butoanele rapide cu care pornește aplicația (le poți schimba din Setări).
-export const DEFAULT_QUICK = [
-  'Lapte', 'Ouă', 'Unt', 'Telemea', 'Cașcaval', 'Iaurt', 'Smântână',
-  'Șuncă', 'Roșii', 'Castraveți', 'Ardei', 'Piept de pui', 'Carne tocată',
-];
+// Butoanele rapide cu care pornește aplicația (le poți schimba din Setări),
+// pe fiecare loc de depozitare.
+export const DEFAULT_QUICK = {
+  frigider: ['Lapte', 'Ouă', 'Unt', 'Telemea', 'Cașcaval', 'Iaurt', 'Smântână',
+    'Șuncă', 'Roșii', 'Castraveți', 'Ardei', 'Piept de pui', 'Carne tocată'],
+  congelator: ['Carne tocată', 'Piept de pui', 'Pește', 'Legume congelate', 'Broccoli congelat'],
+  camara: ['Orez', 'Paste', 'Făină', 'Ulei', 'Ceapă', 'Cartofi', 'Usturoi', 'Năut la borcan', 'Pâine Wasa'],
+};
 
 // După ce coloană sortăm fiecare tabel.
-const ORDER = { items: 'created_at', shopping: 'created_at', quick_items: 'name' };
+// `aisles` ține raioanele alese de voi: id = numele normalizat al produsului.
+const ORDER = { items: 'created_at', shopping: 'created_at', quick_items: 'name', aisles: 'id' };
 
 // -------------------------------------------------------------
 // 1) Implementarea Supabase
@@ -91,6 +95,12 @@ const remote = {
     check(await c.from(table).update(patch).eq('id', id));
   },
 
+  // Inserează sau, dacă există deja un rând cu același id, îl înlocuiește.
+  async upsert(table, row) {
+    const c = await client();
+    check(await c.from(table).upsert(row));
+  },
+
   async remove(table, ids) {
     if (!ids.length) return;
     const c = await client();
@@ -124,12 +134,33 @@ function uid() {
     : Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
 
+function seedQuick() {
+  return Object.entries(DEFAULT_QUICK).flatMap(([location, names]) =>
+    names.map((name) => ({ id: uid(), name, location })));
+}
+
 function seed() {
-  return { items: [], shopping: [], quick_items: DEFAULT_QUICK.map((name) => ({ id: uid(), name })) };
+  return { items: [], shopping: [], quick_items: seedQuick(), aisles: [] };
+}
+
+// Datele salvate de versiunea 1 nu au locuri de depozitare; le completăm.
+function migrate(d) {
+  d.aisles ??= [];
+  for (const it of d.items) it.location ??= 'frigider';
+  if (!d.quick_items.some((q) => q.location && q.location !== 'frigider')) {
+    for (const q of d.quick_items) q.location ??= 'frigider';
+    d.quick_items.push(...seedQuick().filter((q) => q.location !== 'frigider'));
+  }
+  return d;
 }
 
 function readDb() {
-  try { return JSON.parse(localStorage.getItem(KEY)) || seed(); } catch { return seed(); }
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY));
+    return d ? migrate(d) : seed();
+  } catch {
+    return seed();
+  }
 }
 
 let db = readDb();
@@ -140,7 +171,7 @@ const saveDb = () => {
 };
 
 // Valori implicite, la fel ca în baza de date reală.
-const DEFAULTS = { shopping: { done: false } };
+const DEFAULTS = { shopping: { done: false }, items: { location: 'frigider' }, quick_items: { location: 'frigider' } };
 
 const local = {
   async getUser() { return { email: 'demo' }; },
@@ -164,6 +195,12 @@ const local = {
   async update(table, id, patch) {
     const row = db[table].find((r) => r.id === id);
     if (row) Object.assign(row, patch);
+    saveDb();
+  },
+
+  async upsert(table, row) {
+    db[table] = db[table].filter((r) => r.id !== row.id);
+    db[table].push(row);
     saveDb();
   },
 
@@ -203,6 +240,7 @@ export const signOut = impl.signOut;
 export const list = impl.list;
 export const insert = impl.insert;
 export const update = impl.update;
+export const upsert = impl.upsert;
 export const remove = impl.remove;
 export const onChange = impl.onChange;
 export const privateRecipes = impl.privateRecipes;

@@ -34,15 +34,34 @@ function findInFridge(fridge, keys) {
   return fridge.find((item) => keys.some((k) => new RegExp('\\b' + k).test(item.n)));
 }
 
+// Primul cuvânt al produsului din cămară, fără ultima literă, ca să
+// prindă și pluralul: „Cartofi" → „cartof", „Ceapă" → „ceap".
+function pantryStem(name) {
+  const w = norm(name).split(/\s+/)[0] || '';
+  if (w.length < 3) return null;
+  return w.length > 4 ? w.slice(0, -1) : w;
+}
+
+// Un rând „din cămară" (ex. „100 g Orez integral") e bifat dacă un produs
+// din cămară începe un cuvânt din rând. null = nu urmăriți cămara deloc.
+function inPantry(pantry, line) {
+  if (!pantry.length) return null;
+  const t = norm(line);
+  return pantry.some((stem) => new RegExp('(^|[\\s(])' + stem).test(t));
+}
+
 /**
  * Împarte rețetele în:
- *   ready  — ai tot ce trebuie din frigider
- *   almost — îți lipsesc 1–2 ingrediente din frigider
+ *   ready  — ai tot ce trebuie (frigider, congelator sau cămară)
+ *   almost — îți lipsesc 1–2 ingrediente
  * Primele în listă sunt cele care folosesc produse care expiră în
  * cel mult 2 zile, apoi cele care folosesc cele mai multe produse.
  */
 export function matchRecipes(recipes, items, daysLeft) {
+  // Toate produsele (frigider, congelator, cămară) contează ca „ai".
   const fridge = items.map((it) => ({ n: norm(it.name), d: daysLeft(it.expires_on) }));
+  // Pentru ingredientele „din cămară" verificăm doar produsele din cămară.
+  const pantry = items.filter((it) => it.location === 'camara').map((it) => pantryStem(it.name)).filter(Boolean);
 
   const scored = recipes.map((r) => {
     const ing = r.ingrediente.map((i) => {
@@ -52,6 +71,7 @@ export function matchRecipes(recipes, items, daysLeft) {
     return {
       ...r,
       ing,
+      camaraAi: r.camara.map((line) => inPantry(pantry, line)),
       missing: ing.filter((i) => !i.ai && !i.opt),
       have: ing.filter((i) => i.ai).length,
       folosesteCeExpira: ing.some((i) => i.expira),
@@ -77,18 +97,25 @@ export const MESE = ['Mic dejun', 'Mic dejun / Cină', 'Prânz', 'Prânz / Cină
 
 // Textul pe care îl lipești în Claude ca să primești rețete noi.
 export function claudePrompt(items, daysLeft) {
-  const lines = items.map((it) => {
+  const line = (it) => {
     const d = daysLeft(it.expires_on);
     let exp = '';
     if (d !== null) exp = d < 0 ? ' — expirat' : d === 0 ? ' — expiră azi' : ` — expiră în ${d} zile`;
     return `- ${it.name}${it.quantity ? ` (${it.quantity})` : ''}${exp}`;
-  });
+  };
+  const group = (loc, title) => {
+    const list = items.filter((it) => (it.location || 'frigider') === loc);
+    return list.length ? [title, ...list.map(line), ''] : [];
+  };
+  const tracksPantry = items.some((it) => it.location === 'camara');
   return [
-    'Ce avem acum în frigider:',
-    ...lines,
-    '',
+    ...group('frigider', 'Ce avem acum în frigider:'),
+    ...group('congelator', 'În congelator:'),
+    ...group('camara', 'În cămară:'),
     'Propune-ne 3 rețete pentru 2 persoane, în română, care folosesc întâi produsele care expiră curând.',
-    'Presupune că avem în cămară ingrediente de bază: ulei, sare, piper, făină, zahăr, orez, paste, ceapă, usturoi, cartofi.',
+    tracksPantry
+      ? 'Presupune că avem și sare, piper și condimente de bază.'
+      : 'Presupune că avem în cămară ingrediente de bază: ulei, sare, piper, făină, zahăr, orez, paste, ceapă, usturoi, cartofi.',
     'Pentru fiecare rețetă: timpul, ingredientele cu cantități, pașii pe scurt și ce ne lipsește.',
   ].join('\n');
 }

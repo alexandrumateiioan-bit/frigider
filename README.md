@@ -32,7 +32,7 @@ Supabase este baza de date în care stau datele voastre. Planul gratuit ajunge c
 1. Creează un proiect nou în Supabase (regiune: Frankfurt / Central EU). Parola bazei de date pune-o într-un loc sigur; aplicația nu are nevoie de ea.
 2. Deschide `supabase/schema.sql` și **înlocuiește cele două emailuri** de la pasul 1 cu adresele voastre.
 3. În Supabase: **SQL Editor → New query** → lipește tot fișierul → **Run**.
-4. Tot în SQL Editor, o interogare nouă cu conținutul fișierului **`retete-plan.sql`** (rețetele din planul nutrițional) → **Run**. Fișierul ăsta nu e în repo, intenționat.
+4. Tot în SQL Editor, rulează pe rând **`supabase/v2.sql`** (cămară, congelator, raioane), apoi conținutul fișierului **`retete-plan.sql`** (rețetele din planul nutrițional) → **Run**. Fișierul ăsta nu e în repo, intenționat.
 5. **Conturile voastre** (login cu email și parolă, fără emailuri trimise):
    - **Authentication → Users → Add user → Create new user**: emailul tău, o parolă, bifă pe **Auto Confirm User** → **Create user**. La fel pentru soție.
    - **Authentication → Sign In / Providers**: dezactivează **Allow new users to sign up**, ca nimeni altcineva să nu-și poată face cont.
@@ -76,8 +76,10 @@ js/config.js          adresa și cheia Supabase (goale = mod demo)
 js/store.js           stratul de date: citește și scrie în localStorage SAU în Supabase
 js/app.js             ecranele, butoanele și formularele
 js/recipes.js         potrivirea rețetelor cu ce e în frigider
+js/aisles.js          raioanele din magazin și unde ajunge fiecare produs cumpărat
 data/recipes.json     rețetele generale, publice (le poți edita sau adăuga)
 supabase/schema.sql   tabelele și regulile de acces
+supabase/v2.sql       completarea pentru cămară, congelator și raioane
 manifest.json, icons/ ce face pagina să se instaleze ca aplicație
 ```
 
@@ -119,10 +121,7 @@ Rețetele din planurile nutriționale (în Supabase, tabelul `recipes`) au în p
 
 ---
 
-## Idei pentru versiunea 2
+## Ce urmează
 
-- Poză la bon, iar produsele se adaugă singure (are nevoie de AI, deci de un cost mic).
-- Lista de cumpărături grupată pe raioane.
-- Notificare dimineața când ceva expiră azi.
-- Rețete generate direct în aplicație, nu prin copiere în Claude.
-- Cămară și congelator, ca secțiuni separate.
+- Rețete generate direct în aplicație și poză la bon (folosesc aceeași funcție pe server și un cont Claude API).
+- Notificare dimineața când ceva expiră.

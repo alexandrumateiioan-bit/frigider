@@ -1,0 +1,1120 @@
+[
+ {
+  "id": "omleta-cascaval",
+  "nume": "Omletă cu cașcaval și roșii",
+  "timp": 10,
+  "ingrediente": [
+   {
+    "n": "Ouă",
+    "q": "4",
+    "k": [
+     "ou"
+    ]
+   },
+   {
+    "n": "Cașcaval",
+    "q": "50 g",
+    "k": [
+     "cascaval",
+     "mozzarella",
+     "gouda",
+     "emmentaler"
+    ]
+   },
+   {
+    "n": "Roșii",
+    "q": "1",
+    "k": [
+     "rosi",
+     "rosii"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Unt",
+    "q": "1 lingură",
+    "k": [
+     "unt"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "sare",
+   "piper"
+  ],
+  "pasi": [
+   "Bate ouăle cu sare și piper.",
+   "Topește untul în tigaie la foc mediu, toarnă ouăle.",
+   "Când se prinde dedesubt, pune roșia tăiată și cașcavalul ras pe o jumătate.",
+   "Împăturește omleta și mai las-o un minut la foc mic."
+  ]
+ },
+ {
+  "id": "ochiuri-sunca",
+  "nume": "Ochiuri cu șuncă",
+  "timp": 8,
+  "ingrediente": [
+   {
+    "n": "Ouă",
+    "q": "4",
+    "k": [
+     "ou"
+    ]
+   },
+   {
+    "n": "Șuncă",
+    "q": "4 felii",
+    "k": [
+     "sunca",
+     "bacon",
+     "costita",
+     "kaiser"
+    ]
+   },
+   {
+    "n": "Unt",
+    "q": "1 lingură",
+    "k": [
+     "unt"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "sare",
+   "pâine"
+  ],
+  "pasi": [
+   "Rumenește ușor șunca în tigaie.",
+   "Adaugă untul, apoi sparge ouăle peste șuncă.",
+   "Pune capac și lasă 3–4 minute, până se face albușul."
+  ]
+ },
+ {
+  "id": "clatite",
+  "nume": "Clătite",
+  "timp": 30,
+  "ingrediente": [
+   {
+    "n": "Ouă",
+    "q": "3",
+    "k": [
+     "ou"
+    ]
+   },
+   {
+    "n": "Lapte",
+    "q": "500 ml",
+    "k": [
+     "lapte"
+    ]
+   }
+  ],
+  "camara": [
+   "făină (250 g)",
+   "zahăr",
+   "sare",
+   "ulei",
+   "dulceață sau gem"
+  ],
+  "pasi": [
+   "Amestecă ouăle cu laptele, un praf de sare și o lingură de zahăr.",
+   "Adaugă treptat făina, amestecând până nu mai sunt cocoloașe. Pune 2 linguri de ulei.",
+   "Lasă compoziția 10 minute, apoi coace clătite subțiri într-o tigaie unsă ușor.",
+   "Servește cu dulceață, gem sau brânză dulce."
+  ]
+ },
+ {
+  "id": "salata-telemea",
+  "nume": "Salată de roșii cu castraveți și telemea",
+  "timp": 10,
+  "ingrediente": [
+   {
+    "n": "Roșii",
+    "q": "3",
+    "k": [
+     "rosi",
+     "rosii"
+    ]
+   },
+   {
+    "n": "Castraveți",
+    "q": "1–2",
+    "k": [
+     "castravet"
+    ]
+   },
+   {
+    "n": "Telemea",
+    "q": "150 g",
+    "k": [
+     "telemea",
+     "feta",
+     "branza"
+    ]
+   },
+   {
+    "n": "Ardei",
+    "q": "1",
+    "k": [
+     "ardei"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "ceapă",
+   "ulei",
+   "sare"
+  ],
+  "pasi": [
+   "Taie roșiile, castraveții, ardeiul și puțină ceapă.",
+   "Adaugă telemeaua tăiată cuburi.",
+   "Pune sare, ulei și amestecă ușor."
+  ]
+ },
+ {
+  "id": "mamaliga-branza",
+  "nume": "Mămăligă cu brânză și smântână",
+  "timp": 25,
+  "ingrediente": [
+   {
+    "n": "Telemea",
+    "q": "200 g",
+    "k": [
+     "telemea",
+     "branza"
+    ]
+   },
+   {
+    "n": "Smântână",
+    "q": "200 g",
+    "k": [
+     "smantana"
+    ]
+   },
+   {
+    "n": "Ouă (pentru ochiuri)",
+    "q": "2",
+    "k": [
+     "ou"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "mălai (200 g)",
+   "sare"
+  ],
+  "pasi": [
+   "Fierbe 800 ml apă cu sare, adaugă mălaiul în ploaie amestecând continuu.",
+   "Lasă la foc mic 15 minute, amestecând des.",
+   "Servește cu brânză sfărâmată, smântână și, dacă vrei, ochiuri."
+  ]
+ },
+ {
+  "id": "carbonara",
+  "nume": "Paste carbonara (variantă de casă)",
+  "timp": 20,
+  "ingrediente": [
+   {
+    "n": "Ouă",
+    "q": "3",
+    "k": [
+     "ou"
+    ]
+   },
+   {
+    "n": "Bacon sau șuncă",
+    "q": "150 g",
+    "k": [
+     "bacon",
+     "sunca",
+     "pancetta",
+     "guanciale",
+     "costita"
+    ]
+   },
+   {
+    "n": "Parmezan sau cașcaval",
+    "q": "60 g",
+    "k": [
+     "parmezan",
+     "parmigiano",
+     "grana",
+     "pecorino",
+     "cascaval"
+    ]
+   }
+  ],
+  "camara": [
+   "paste (250 g)",
+   "piper",
+   "sare"
+  ],
+  "pasi": [
+   "Fierbe pastele în apă cu sare. Păstrează o cană din apa în care au fiert.",
+   "Rumenește baconul tăiat fâșii.",
+   "Bate ouăle cu brânza rasă și mult piper.",
+   "Pune pastele scurse peste bacon, ia tigaia de pe foc, toarnă ouăle și amestecă repede, adăugând puțină apă de la paste până devine cremos."
+  ]
+ },
+ {
+  "id": "pui-tigaie",
+  "nume": "Piept de pui la tigaie cu salată",
+  "timp": 20,
+  "ingrediente": [
+   {
+    "n": "Piept de pui",
+    "q": "2 bucăți",
+    "k": [
+     "pui"
+    ]
+   },
+   {
+    "n": "Salată verde",
+    "q": "1",
+    "k": [
+     "salata",
+     "rucola",
+     "spanac"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Lămâie",
+    "q": "1/2",
+    "k": [
+     "lamai"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "ulei",
+   "sare",
+   "piper",
+   "usturoi"
+  ],
+  "pasi": [
+   "Bate ușor pieptul de pui ca să aibă grosime egală, condimentează-l.",
+   "Prăjește-l în puțin ulei, 5–6 minute pe fiecare parte.",
+   "Lasă-l 3 minute să se odihnească, apoi taie-l felii. Servește cu salată și zeamă de lămâie."
+  ]
+ },
+ {
+  "id": "supa-pui",
+  "nume": "Supă de pui cu tăiței",
+  "timp": 60,
+  "ingrediente": [
+   {
+    "n": "Pui",
+    "q": "500 g",
+    "k": [
+     "pui"
+    ]
+   },
+   {
+    "n": "Morcovi",
+    "q": "2",
+    "k": [
+     "morcov"
+    ]
+   },
+   {
+    "n": "Țelină",
+    "q": "1 bucată",
+    "k": [
+     "telina"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Pătrunjel",
+    "q": "o mână",
+    "k": [
+     "patrunjel"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "ceapă",
+   "tăiței",
+   "sare"
+  ],
+  "pasi": [
+   "Pune puiul în 2 l apă rece, fierbe și ia spuma.",
+   "Adaugă ceapa, morcovii și țelina, lasă 40 de minute la foc mic.",
+   "Scoate legumele și carnea, pune tăițeii și fierbe-i 5 minute.",
+   "Pune la loc carnea și legumele tăiate, presară pătrunjel."
+  ]
+ },
+ {
+  "id": "chiftele",
+  "nume": "Chiftele cu piure",
+  "timp": 45,
+  "ingrediente": [
+   {
+    "n": "Carne tocată",
+    "q": "500 g",
+    "k": [
+     "carne tocata",
+     "tocatura",
+     "tocata"
+    ]
+   },
+   {
+    "n": "Ouă",
+    "q": "1",
+    "k": [
+     "ou"
+    ]
+   },
+   {
+    "n": "Lapte (pentru piure)",
+    "q": "100 ml",
+    "k": [
+     "lapte"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Unt (pentru piure)",
+    "q": "30 g",
+    "k": [
+     "unt"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "cartofi (1 kg)",
+   "ceapă",
+   "pesmet",
+   "ulei",
+   "sare",
+   "piper"
+  ],
+  "pasi": [
+   "Amestecă carnea cu oul, ceapa rasă, 2 linguri de pesmet, sare și piper.",
+   "Formează chiftele, dă-le prin pesmet și prăjește-le pe toate părțile.",
+   "Fierbe cartofii, pasează-i cu unt și lapte cald."
+  ]
+ },
+ {
+  "id": "bolognese",
+  "nume": "Paste bolognese",
+  "timp": 35,
+  "ingrediente": [
+   {
+    "n": "Carne tocată",
+    "q": "400 g",
+    "k": [
+     "carne tocata",
+     "tocatura",
+     "tocata"
+    ]
+   },
+   {
+    "n": "Morcov",
+    "q": "1",
+    "k": [
+     "morcov"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Parmezan sau cașcaval",
+    "q": "după gust",
+    "k": [
+     "parmezan",
+     "grana",
+     "cascaval"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "paste (300 g)",
+   "ceapă",
+   "usturoi",
+   "pasată de roșii (500 g)",
+   "ulei",
+   "sare"
+  ],
+  "pasi": [
+   "Călește ceapa, usturoiul și morcovul ras în puțin ulei.",
+   "Adaugă carnea și rumenește-o, desfăcând-o cu lingura.",
+   "Toarnă pasata, sare, și lasă 20 de minute la foc mic.",
+   "Amestecă cu pastele fierte și presară brânză rasă."
+  ]
+ },
+ {
+  "id": "ardei-umpluti",
+  "nume": "Ardei umpluți",
+  "timp": 75,
+  "ingrediente": [
+   {
+    "n": "Carne tocată",
+    "q": "500 g",
+    "k": [
+     "carne tocata",
+     "tocatura",
+     "tocata"
+    ]
+   },
+   {
+    "n": "Ardei grași",
+    "q": "6–8",
+    "k": [
+     "ardei"
+    ]
+   },
+   {
+    "n": "Smântână",
+    "q": "pentru servire",
+    "k": [
+     "smantana"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Ouă",
+    "q": "1",
+    "k": [
+     "ou"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "orez (100 g)",
+   "ceapă",
+   "pasată de roșii",
+   "sare",
+   "piper",
+   "mărar uscat"
+  ],
+  "pasi": [
+   "Amestecă carnea cu orezul spălat, ceapa tocată, oul, sare și piper.",
+   "Curăță ardeii de semințe și umple-i, fără să-i îndesi.",
+   "Așază-i într-o oală, acoperă cu pasată diluată cu apă.",
+   "Fierbe la foc mic aproximativ o oră. Servește cu smântână."
+  ]
+ },
+ {
+  "id": "carnati-cartofi",
+  "nume": "Cârnați cu cartofi la cuptor",
+  "timp": 50,
+  "ingrediente": [
+   {
+    "n": "Cârnați",
+    "q": "4–6",
+    "k": [
+     "carnat",
+     "carnati",
+     "crenvurst"
+    ]
+   },
+   {
+    "n": "Ardei",
+    "q": "1",
+    "k": [
+     "ardei"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "cartofi (1 kg)",
+   "ceapă",
+   "ulei",
+   "sare",
+   "boia",
+   "rozmarin"
+  ],
+  "pasi": [
+   "Taie cartofii felii groase, amestecă-i cu ulei, sare, boia și rozmarin.",
+   "Pune-i în tavă împreună cu ceapa și ardeiul tăiate.",
+   "Bagă la cuptor 20 de minute la 200°C, apoi adaugă cârnații.",
+   "Mai lasă 20–25 de minute, până se rumenesc."
+  ]
+ },
+ {
+  "id": "iaurt-fructe",
+  "nume": "Iaurt cu fructe și miere",
+  "timp": 5,
+  "ingrediente": [
+   {
+    "n": "Iaurt",
+    "q": "300 g",
+    "k": [
+     "iaurt"
+    ]
+   },
+   {
+    "n": "Fructe",
+    "q": "o mână",
+    "k": [
+     "fructe",
+     "capsuni",
+     "afine",
+     "zmeura",
+     "mure",
+     "banan",
+     "mere",
+     "piersic",
+     "kiwi"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "miere",
+   "ovăz sau nuci"
+  ],
+  "pasi": [
+   "Pune iaurtul în boluri.",
+   "Adaugă fructele tăiate, mierea și ovăzul sau nucile."
+  ]
+ },
+ {
+  "id": "sandvis-cald",
+  "nume": "Sandvișuri calde cu șuncă și cașcaval",
+  "timp": 10,
+  "ingrediente": [
+   {
+    "n": "Șuncă",
+    "q": "4 felii",
+    "k": [
+     "sunca",
+     "kaiser",
+     "salam",
+     "piept de curcan"
+    ]
+   },
+   {
+    "n": "Cașcaval",
+    "q": "4 felii",
+    "k": [
+     "cascaval",
+     "mozzarella",
+     "gouda",
+     "emmentaler"
+    ]
+   },
+   {
+    "n": "Roșii",
+    "q": "1",
+    "k": [
+     "rosi",
+     "rosii"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Unt",
+    "q": "puțin",
+    "k": [
+     "unt"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "pâine (4 felii)"
+  ],
+  "pasi": [
+   "Unge feliile de pâine cu puțin unt pe exterior.",
+   "Pune șunca, cașcavalul și roșia între două felii.",
+   "Rumenește în tigaie sau în sandwich-maker, 2–3 minute pe fiecare parte."
+  ]
+ },
+ {
+  "id": "quesadilla",
+  "nume": "Quesadilla cu pui și ardei",
+  "timp": 15,
+  "ingrediente": [
+   {
+    "n": "Cașcaval sau mozzarella",
+    "q": "150 g",
+    "k": [
+     "cascaval",
+     "mozzarella",
+     "cheddar",
+     "gouda"
+    ]
+   },
+   {
+    "n": "Pui (gătit sau crud)",
+    "q": "200 g",
+    "k": [
+     "pui"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Ardei",
+    "q": "1",
+    "k": [
+     "ardei"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Smântână",
+    "q": "pentru servire",
+    "k": [
+     "smantana"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "lipii tortilla",
+   "sare",
+   "boia"
+  ],
+  "pasi": [
+   "Dacă puiul e crud, taie-l fâșii și călește-l cu ardeiul, sare și boia.",
+   "Pe jumătate de lipie pune brânză rasă, pui și ardei, împăturește.",
+   "Rumenește în tigaie uscată 2 minute pe fiecare parte. Taie felii, servește cu smântână."
+  ]
+ },
+ {
+  "id": "ciuperci-smantana",
+  "nume": "Ciuperci cu smântână",
+  "timp": 20,
+  "ingrediente": [
+   {
+    "n": "Ciuperci",
+    "q": "500 g",
+    "k": [
+     "ciuperc"
+    ]
+   },
+   {
+    "n": "Smântână",
+    "q": "200 g",
+    "k": [
+     "smantana"
+    ]
+   },
+   {
+    "n": "Unt",
+    "q": "1 lingură",
+    "k": [
+     "unt"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Mărar sau pătrunjel",
+    "q": "o mână",
+    "k": [
+     "marar",
+     "patrunjel"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "ceapă",
+   "usturoi",
+   "sare",
+   "piper"
+  ],
+  "pasi": [
+   "Călește ceapa în unt, adaugă ciupercile feliate.",
+   "Lasă la foc mare până se evaporă apa și se rumenesc ușor.",
+   "Adaugă usturoiul, smântâna, sare și piper, mai fierbe 2 minute.",
+   "Presară verdeață. Merge cu mămăligă sau orez."
+  ]
+ },
+ {
+  "id": "supa-crema-legume",
+  "nume": "Supă cremă de legume",
+  "timp": 35,
+  "ingrediente": [
+   {
+    "n": "Morcovi",
+    "q": "3",
+    "k": [
+     "morcov"
+    ]
+   },
+   {
+    "n": "Dovlecel sau broccoli",
+    "q": "1",
+    "k": [
+     "dovlecel",
+     "broccoli",
+     "conopida"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Smântână",
+    "q": "pentru servire",
+    "k": [
+     "smantana"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "cartofi (2)",
+   "ceapă",
+   "ulei",
+   "sare"
+  ],
+  "pasi": [
+   "Călește ceapa, adaugă legumele și cartofii tăiați cuburi.",
+   "Acoperă cu apă, pune sare și fierbe 20 de minute.",
+   "Pasează cu blenderul vertical. Servește cu smântână."
+  ]
+ },
+ {
+  "id": "risotto-ciuperci",
+  "nume": "Risotto cu ciuperci",
+  "timp": 35,
+  "ingrediente": [
+   {
+    "n": "Ciuperci",
+    "q": "300 g",
+    "k": [
+     "ciuperc"
+    ]
+   },
+   {
+    "n": "Unt",
+    "q": "30 g",
+    "k": [
+     "unt"
+    ]
+   },
+   {
+    "n": "Parmezan sau cașcaval",
+    "q": "50 g",
+    "k": [
+     "parmezan",
+     "grana",
+     "cascaval"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "orez (200 g)",
+   "ceapă",
+   "supă cub sau concentrat",
+   "sare"
+  ],
+  "pasi": [
+   "Călește ceapa în jumătate din unt, adaugă ciupercile.",
+   "Pune orezul și amestecă 1 minut.",
+   "Adaugă supa caldă câte un polonic, amestecând, până orezul e moale (circa 18 minute).",
+   "La final pune restul de unt și brânza rasă."
+  ]
+ },
+ {
+  "id": "peste-cuptor",
+  "nume": "Pește la cuptor cu legume",
+  "timp": 30,
+  "ingrediente": [
+   {
+    "n": "File de pește",
+    "q": "2 bucăți",
+    "k": [
+     "somon",
+     "peste",
+     "cod",
+     "dorada",
+     "biban",
+     "pastrav"
+    ]
+   },
+   {
+    "n": "Dovlecel sau ardei",
+    "q": "1",
+    "k": [
+     "dovlecel",
+     "ardei"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Lămâie",
+    "q": "1",
+    "k": [
+     "lamai"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "ulei de măsline",
+   "sare",
+   "piper",
+   "usturoi"
+  ],
+  "pasi": [
+   "Pune legumele tăiate în tavă cu ulei și sare, bagă-le 10 minute la 200°C.",
+   "Așază peștele peste ele, condimentează, pune felii de lămâie.",
+   "Mai lasă 12–15 minute, până peștele se desface ușor."
+  ]
+ },
+ {
+  "id": "pasta-branza",
+  "nume": "Pastă de brânză cu smântână și mărar",
+  "timp": 5,
+  "ingrediente": [
+   {
+    "n": "Brânză de vaci sau telemea",
+    "q": "250 g",
+    "k": [
+     "branza",
+     "telemea",
+     "urda"
+    ]
+   },
+   {
+    "n": "Smântână",
+    "q": "3 linguri",
+    "k": [
+     "smantana"
+    ]
+   },
+   {
+    "n": "Mărar",
+    "q": "o mână",
+    "k": [
+     "marar"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "pâine",
+   "sare"
+  ],
+  "pasi": [
+   "Zdrobește brânza cu furculița, amestecă cu smântâna.",
+   "Adaugă mărarul tocat și sare dacă e nevoie. Merge pe pâine prăjită."
+  ]
+ },
+ {
+  "id": "musaca-cartofi",
+  "nume": "Musaca de cartofi",
+  "timp": 80,
+  "ingrediente": [
+   {
+    "n": "Carne tocată",
+    "q": "500 g",
+    "k": [
+     "carne tocata",
+     "tocatura",
+     "tocata"
+    ]
+   },
+   {
+    "n": "Ouă",
+    "q": "2",
+    "k": [
+     "ou"
+    ]
+   },
+   {
+    "n": "Lapte",
+    "q": "200 ml",
+    "k": [
+     "lapte"
+    ]
+   },
+   {
+    "n": "Smântână",
+    "q": "100 g",
+    "k": [
+     "smantana"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "cartofi (1 kg)",
+   "ceapă",
+   "ulei",
+   "sare",
+   "piper"
+  ],
+  "pasi": [
+   "Călește ceapa, adaugă carnea, sare și piper, rumenește 10 minute.",
+   "Taie cartofii felii subțiri. Pune în tavă straturi: cartofi, carne, cartofi.",
+   "Bate ouăle cu laptele și smântâna, toarnă peste.",
+   "Coace 50 de minute la 190°C, până cartofii sunt moi și deasupra e rumen."
+  ]
+ },
+ {
+  "id": "frittata",
+  "nume": "Frittata cu legume",
+  "timp": 20,
+  "ingrediente": [
+   {
+    "n": "Ouă",
+    "q": "6",
+    "k": [
+     "ou"
+    ]
+   },
+   {
+    "n": "Ardei, dovlecel sau ciuperci",
+    "q": "200 g",
+    "k": [
+     "ardei",
+     "dovlecel",
+     "ciuperc",
+     "spanac"
+    ]
+   },
+   {
+    "n": "Cașcaval sau telemea",
+    "q": "50 g",
+    "k": [
+     "cascaval",
+     "telemea",
+     "branza",
+     "mozzarella"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "ceapă",
+   "ulei",
+   "sare",
+   "piper"
+  ],
+  "pasi": [
+   "Călește ceapa și legumele într-o tigaie care merge la cuptor.",
+   "Bate ouăle cu sare, piper și brânza, toarnă-le peste legume.",
+   "Lasă 3 minute pe foc, apoi 10 minute la cuptor la 180°C."
+  ]
+ },
+ {
+  "id": "orez-cu-lapte",
+  "nume": "Orez cu lapte",
+  "timp": 35,
+  "ingrediente": [
+   {
+    "n": "Lapte",
+    "q": "1 l",
+    "k": [
+     "lapte"
+    ]
+   }
+  ],
+  "camara": [
+   "orez (100 g)",
+   "zahăr",
+   "esență de vanilie",
+   "scorțișoară"
+  ],
+  "pasi": [
+   "Fierbe orezul 5 minute în puțină apă, scurge-l.",
+   "Pune-l în laptele care fierbe, la foc mic, amestecând des, 25 de minute.",
+   "Adaugă zahăr și vanilie, presară scorțișoară la servire."
+  ]
+ },
+ {
+  "id": "tzatziki",
+  "nume": "Tzatziki cu legume crude",
+  "timp": 10,
+  "ingrediente": [
+   {
+    "n": "Iaurt (grecesc ideal)",
+    "q": "300 g",
+    "k": [
+     "iaurt"
+    ]
+   },
+   {
+    "n": "Castraveți",
+    "q": "1",
+    "k": [
+     "castravet"
+    ]
+   },
+   {
+    "n": "Mărar",
+    "q": "puțin",
+    "k": [
+     "marar"
+    ],
+    "opt": true
+   },
+   {
+    "n": "Morcovi sau ardei pentru dip",
+    "q": "după gust",
+    "k": [
+     "morcov",
+     "ardei"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "usturoi",
+   "ulei de măsline",
+   "sare"
+  ],
+  "pasi": [
+   "Rade castravetele, stoarce-l bine de apă.",
+   "Amestecă-l cu iaurtul, usturoiul pisat, mărarul, ulei și sare.",
+   "Servește cu bețe de morcov și ardei."
+  ]
+ },
+ {
+  "id": "pui-smantana",
+  "nume": "Pui cu smântână și ciuperci",
+  "timp": 35,
+  "ingrediente": [
+   {
+    "n": "Piept sau pulpe de pui",
+    "q": "500 g",
+    "k": [
+     "pui"
+    ]
+   },
+   {
+    "n": "Smântână",
+    "q": "200 g",
+    "k": [
+     "smantana"
+    ]
+   },
+   {
+    "n": "Ciuperci",
+    "q": "250 g",
+    "k": [
+     "ciuperc"
+    ],
+    "opt": true
+   }
+  ],
+  "camara": [
+   "ceapă",
+   "usturoi",
+   "ulei",
+   "sare",
+   "piper"
+  ],
+  "pasi": [
+   "Rumenește puiul tăiat bucăți, scoate-l din tigaie.",
+   "Călește ceapa și ciupercile în aceeași tigaie.",
+   "Pune puiul înapoi, adaugă smântâna și puțină apă, lasă 15 minute la foc mic.",
+   "Merge cu orez, paste sau mămăligă."
+  ]
+ }
+]

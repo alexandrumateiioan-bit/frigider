@@ -33,7 +33,9 @@ Supabase este baza de date în care stau datele voastre. Planul gratuit ajunge c
 2. Deschide `supabase/schema.sql` și **înlocuiește cele două emailuri** de la pasul 1 cu adresele voastre.
 3. În Supabase: **SQL Editor → New query** → lipește tot fișierul → **Run**.
 4. Tot în SQL Editor, o interogare nouă cu conținutul fișierului **`retete-plan.sql`** (rețetele din planul nutrițional) → **Run**. Fișierul ăsta nu e în repo, intenționat.
-5. **Authentication → Emails → Templates**: în șabloanele **Magic Link** și **Confirm signup** adaugă rândul `Codul tău: {{ .Token }}`. Pe iPhone intri cu codul, nu cu linkul (linkul s-ar deschide în Safari, nu în aplicație).
+5. **Conturile voastre** (login cu email și parolă, fără emailuri trimise):
+   - **Authentication → Users → Add user → Create new user**: emailul tău, o parolă, bifă pe **Auto Confirm User** → **Create user**. La fel pentru soție.
+   - **Authentication → Sign In / Providers**: dezactivează **Allow new users to sign up**, ca nimeni altcineva să nu-și poată face cont.
 6. Butonul **Connect** din partea de sus a proiectului (sau **Project Settings → API Keys**): copiază **Project URL** și cheia **publishable** în `js/config.js`.
 
 Despre cheia din `config.js`: e făcută să fie publică, deci poate sta într-un repo public.
@@ -41,7 +43,7 @@ Datele sunt protejate de regulile din `schema.sql`: doar emailurile din tabelul 
 
 **De știut despre planul gratuit Supabase:**
 - Proiectele gratuite se pun pe pauză dacă nu sunt folosite o săptămână. Folosită zilnic, aplicația nu are problema asta; dacă se întâmplă, repornești proiectul din panoul Supabase.
-- Poți cere un cod nou de login o dată la 60 de secunde, iar codul expiră după o oră.
+- Dacă uitați o parolă: în **Authentication → Users** ștergeți contul și îl creați din nou cu o parolă nouă. Datele din frigider nu se pierd (sunt ale casei, nu ale contului).
 
 ### Ce e public și ce e privat
 
@@ -59,7 +61,7 @@ Datele sunt protejate de regulile din `schema.sql`: doar emailurile din tabelul 
 
 1. Deschide adresa de mai sus în **Safari**.
 2. Butonul **Partajează** → **Adaugă pe ecranul principal**.
-3. Deschide aplicația de pe ecranul principal, intră cu emailul și codul primit.
+3. Deschide aplicația de pe ecranul principal și intră cu emailul și parola. Rămâi logat până apeși Deconectare.
 
 ---
 

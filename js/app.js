@@ -29,8 +29,6 @@ const state = {
   openRecipes: new Set(),
   showPrompt: false,
   recipeFilter: 'toate', // 'toate' sau 'plan'
-  loginStep: 'email',
-  loginEmail: '',
 };
 
 const TITLES = { frigider: 'Frigider', cumparaturi: 'Cumpărături', retete: 'Rețete', setari: 'Setări' };
@@ -310,24 +308,14 @@ function viewSetari() {
 }
 
 function viewLogin() {
-  if (state.loginStep === 'email') {
-    return `
-      <section class="card">
-        <p style="margin-top:0">Intră cu emailul tău. Îți trimitem un cod.</p>
-        <form id="login" class="add">
-          <input name="email" type="email" placeholder="email@exemplu.ro" autocomplete="email" required>
-          <button class="primary">Trimite codul</button>
-        </form>
-      </section>`;
-  }
   return `
     <section class="card">
-      <p style="margin-top:0">Am trimis un cod la <b>${esc(state.loginEmail)}</b>.</p>
-      <form id="code" class="add">
-        <input name="code" inputmode="numeric" autocomplete="one-time-code" placeholder="Codul din email" maxlength="10" required>
+      <p style="margin-top:0">Intră cu emailul și parola contului tău.</p>
+      <form id="login" class="add">
+        <input name="email" type="email" placeholder="email@exemplu.ro" autocomplete="username" required>
+        <input name="password" type="password" placeholder="Parola" autocomplete="current-password" required>
         <button class="primary">Intră</button>
       </form>
-      <button class="secondary block" style="margin-top:8px" data-action="other-email">Alt email</button>
     </section>`;
 }
 
@@ -429,7 +417,6 @@ const actions = {
   async logout() {
     await store.signOut();
     state.user = null;
-    state.loginStep = 'email';
     render();
   },
 
@@ -439,10 +426,6 @@ const actions = {
     render();
   },
 
-  'other-email'() {
-    state.loginStep = 'email';
-    render();
-  },
 };
 
 // -------------------------------------------------------------
@@ -480,14 +463,12 @@ const forms = {
   },
 
   async login(data) {
-    state.loginEmail = data.email.trim();
-    await store.sendCode(state.loginEmail);
-    state.loginStep = 'code';
-    render();
-  },
-
-  async code(data) {
-    state.user = await store.verifyCode(state.loginEmail, data.code.trim());
+    try {
+      state.user = await store.signIn(data.email.trim(), data.password);
+    } catch {
+      toast('Email sau parolă greșită');
+      return;
+    }
     await startSession();
   },
 };
@@ -549,7 +530,6 @@ async function startSession() {
   if (!(await store.isMember())) {
     await store.signOut();
     state.user = null;
-    state.loginStep = 'email';
     render();
     toast('Emailul ăsta nu e pe lista casei');
     return;

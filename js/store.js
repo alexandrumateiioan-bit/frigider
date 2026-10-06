@@ -56,17 +56,12 @@ const remote = {
     return data.session?.user ?? null;
   },
 
-  // Trimite un cod de 6 cifre pe email. Folosim cod, nu link,
-  // pentru că pe iPhone un link s-ar deschide în Safari, iar
-  // aplicația de pe ecranul principal nu ar afla de login.
-  async sendCode(email) {
+  // Login cu email și parolă. Conturile le creezi tu din panoul
+  // Supabase (Authentication → Users → Add user); înscrierea din
+  // aplicație e dezactivată, deci nu se pot crea conturi străine.
+  async signIn(email, password) {
     const c = await client();
-    check(await c.auth.signInWithOtp({ email, options: { shouldCreateUser: true } }));
-  },
-
-  async verifyCode(email, token) {
-    const c = await client();
-    const data = check(await c.auth.verifyOtp({ email, token, type: 'email' }));
+    const data = check(await c.auth.signInWithPassword({ email, password }));
     return data.user;
   },
 
@@ -149,8 +144,7 @@ const DEFAULTS = { shopping: { done: false } };
 
 const local = {
   async getUser() { return { email: 'demo' }; },
-  async sendCode() {},
-  async verifyCode() { return { email: 'demo' }; },
+  async signIn() { return { email: 'demo' }; },
   async isMember() { return true; },
   async signOut() {},
 
@@ -203,8 +197,7 @@ const local = {
 const impl = isDemo ? local : remote;
 
 export const getUser = impl.getUser;
-export const sendCode = impl.sendCode;
-export const verifyCode = impl.verifyCode;
+export const signIn = impl.signIn;
 export const isMember = impl.isMember;
 export const signOut = impl.signOut;
 export const list = impl.list;

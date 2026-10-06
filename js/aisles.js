@@ -16,7 +16,7 @@
 //    produsele cumpărate se deduce tot din raion.
 // =============================================================
 
-import { norm } from './recipes.js';
+import { norm } from './recipes.js?v=3';
 
 // Ordinea în care apar raioanele în listă (drumul obișnuit prin magazin).
 export const AISLES = [

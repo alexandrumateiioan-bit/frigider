@@ -24,7 +24,7 @@ export function norm(s) {
 }
 
 export async function loadRecipes() {
-  const res = await fetch('data/recipes.json');
+  const res = await fetch('data/recipes.json?v=3');
   if (!res.ok) throw new Error('Nu am putut încărca rețetele');
   return res.json();
 }

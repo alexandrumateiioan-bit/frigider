@@ -10,9 +10,9 @@
 // E simplu și, pentru câteva zeci de produse, suficient de rapid.
 // =============================================================
 
-import * as store from './store.js';
-import { loadRecipes, matchRecipes, claudePrompt, norm, MESE } from './recipes.js';
-import { AISLES, aisleFor, placeFor, PLACES, placeLabel, placeIn } from './aisles.js';
+import * as store from './store.js?v=3';
+import { loadRecipes, matchRecipes, claudePrompt, norm, MESE } from './recipes.js?v=3';
+import { AISLES, aisleFor, placeFor, PLACES, placeLabel, placeIn } from './aisles.js?v=3';
 
 const $ = (sel) => document.querySelector(sel);
 const view = $('#view');

@@ -12,7 +12,7 @@
 // La final alegem una dintre ele în funcție de config.js.
 // =============================================================
 
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js?v=3';
 
 export const isDemo = !SUPABASE_URL || !SUPABASE_ANON_KEY;
 
